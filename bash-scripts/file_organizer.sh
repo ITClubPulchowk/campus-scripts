@@ -1,5 +1,8 @@
 # to clean up your messy downloads folder
 
+# packages/dependencies required : awk, others are available in most GNU/Linux
+# distros by default
+
 # you can either sort by file names (first letter) and place it in 
 # respective alphabetical directories, or sort by file extension
 

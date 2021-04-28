@@ -1,4 +1,7 @@
 # automatic login to pulchowk campus internet
+
+# dependencies required : curl (if your system doesn't have it)
+
 # replace USER value with your username and PASSWORD with your own
 # the ETHERNET_CARD and WIFI_CARD are used in case you also want to 
 # automatically open hotsopt if you connect from an ethernet cable

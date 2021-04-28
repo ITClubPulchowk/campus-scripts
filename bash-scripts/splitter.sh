@@ -1,6 +1,8 @@
 # split files into chunks so that you can send files over a platform that
 # only allows limited file upload size (ex, 8 MB in discord)
 
+# packages/dependencies required: openssl (for encryption/decryption)
+
 # SPLIT_FILE_EXTENSION is the extension you want your file to be split into
 # CHUNK_SIZE defines the individual split file size
 # PASSWORD is for encryption
