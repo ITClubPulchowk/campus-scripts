@@ -2,7 +2,7 @@
 
 ## Contents
 
-1) [Convert Videos to GIF](www.link1)
+1) [Convert Videos to GIF](https://github.com/IT-Club-Pulchowk/campus-scripts/blob/main/tools-guides/utilities.md#convert-videos-to-gif)
 
 ---
 
