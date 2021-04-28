@@ -1,10 +1,10 @@
 # Useful Commands For Lab/Report Submissions
 
 ## Contents
-1) [Converting ppt/docx to pdf](www.link1) 
-2) [Merging multiple pdf files](www.link2)
-3) [Extracting from pdf](www.link3)
-4) [Images to pdf conversion](www.link4)
+1) [Converting ppt/docx to pdf](https://github.com/IT-Club-Pulchowk/campus-scripts/blob/main/tools-guides/report-submissions.md#convert-pptdocx-into-pdf) 
+2) [Merging multiple pdf files](https://github.com/IT-Club-Pulchowk/campus-scripts/blob/main/tools-guides/report-submissions.md#merging-multiple-pdfs)
+3) [Extracting from pdf](https://github.com/IT-Club-Pulchowk/campus-scripts/blob/main/tools-guides/report-submissions.md#to-extract-specific-pages-from-a-pdf)
+4) [Images to pdf conversion](https://github.com/IT-Club-Pulchowk/campus-scripts/blob/main/tools-guides/report-submissions.md#to-convert-images-to-pdf)
 
 ---
 
@@ -56,6 +56,9 @@ $ pdfunite *.pdf output.pdf
 
 ## To extract specific pages from a pdf
 
+Category is self-described, useful when you need only a few specific pages to
+print/read instead of a whole pdf.
+
 **Package required:** pdfseparate (linux)
 
 **Description:** 
@@ -73,6 +76,9 @@ each individual page in a separate file.
 ---
 
 ## To convert images to pdf
+
+One of the most required tasks you will come across, specially
+with everything from classes to assignments being online.
 
 **Package required:** img2pdf (pip3-python package)
 
