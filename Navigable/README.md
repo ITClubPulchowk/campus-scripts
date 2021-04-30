@@ -19,9 +19,9 @@ Like this....
 
 ![ram](ss/wss2.png)
 
-### 2. Go to downloaded file and run SETUP file
+### 2. Run SETUP file
 
-Then go inside the Directory insde the Downloaded File.
+Then go to the Directory inside the Downloaded File.
 Here its inside `../Documents/Navigable`
 
 And then enter the command as follow. [Note your system should have python installed (Obviously!)]
@@ -76,7 +76,7 @@ c:/> doc c
 
 ![ram](ss/wss7.png)
 
-You can also navigate to Childern Folder from command
+You can also navigate to Children Folder from command
 
 ```bash
 
