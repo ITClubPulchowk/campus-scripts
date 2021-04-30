@@ -96,6 +96,9 @@ c:/> doc mm c
 
 ![ram](ss/wss8.png)
 
+_Note:- if the command didn't work the issue might be due to `directory not in path`
+so put the `C:\nable-bin` in path_
+
 # Setup (Linux)
 
 **_Note:-All the operations are exactly same as windows_**
