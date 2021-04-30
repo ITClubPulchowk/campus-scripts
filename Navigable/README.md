@@ -13,6 +13,10 @@ naviagable.
 
 ### 1. Open the command prompt in ADMINISTRATIVE mode
 
+_Note:- Admin console is require because we have add the location of commands in PATH so its important._
+
+Also note, after installation you can use regular command prompt to create jump commands.
+
 ![ram](ss/wss1.png)
 
 Like this....
@@ -24,7 +28,7 @@ Like this....
 Then go to the Directory inside the Downloaded File.
 Here its inside `../Documents/Navigable`
 
-And then enter the command as follow. [Note your system should have python installed (Obviously!)]
+And then enter the command as follow. [Note your system should have python installed and should be in `PATH` (Obviously!)]
 
 ![ram](ss/wss3.png)
 
