@@ -111,10 +111,10 @@ c:/> doc mm c
 
 **Now after executing the nable command your have to update the ~/.bashrc each time**
 
-\_Note:- First time of executing nable command you have to update traditional way i.e
+_Note:- First time of executing nable command you have to update traditional way i.e
 `source ~/.bashrc`
 after that you can use **alias** `uprc` aka update ~/.bashrc
-(alias is set automatically at setup process)
+(alias is set automatically at setup process)_
 
 ![ram](ss/lss4.png)
 
