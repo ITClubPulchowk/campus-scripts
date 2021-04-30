@@ -123,3 +123,21 @@ All the features are same as that of windows.
 
 ![ram](ss/lss2.png)
 ![ram](ss/lss3.png)
+
+# Uninstalling 
+To remove the folder you just have to delete folder containing 
+scritps.
+
+### Windows
+Open the command prompt enter following command.
+
+```
+rmdir C:\nable-bin 
+```
+
+### Linux
+Open a terminal enter following command
+
+```
+rm ~/nable-bin -r -f
+```
