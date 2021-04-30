@@ -13,7 +13,7 @@ naviagable.
 
 ### 1. Open the command prompt in ADMINISTRATIVE mode
 
-_Note:- Admin console is require because we have add the location of commands in PATH so its important._
+_Note:- Admin console is require because we have to add the location of commands in PATH so its important._
 
 Also note, after installation you can use regular command prompt to create jump commands.
 
