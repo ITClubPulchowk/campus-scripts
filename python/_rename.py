@@ -47,11 +47,14 @@ def make_upper_camel_kebab(x):
 
 
 def handle_exceptions(old_name, new_name):
-    try:
-        os.rename(old_name, new_name)
-    except FileExistsError:
+    # handle FileExistsError
+    if os.path.exists(new_name) and old_name != new_name:
         print(f"Can't rename {old_name} to {new_name}.")
         print(f"{new_name} already exists.\n")
+        return
+        
+    try:
+        os.rename(old_name, new_name)
     except PermissionError:
         print(
             f"Can't rename {old_name}, it is being used by another process.\n")
