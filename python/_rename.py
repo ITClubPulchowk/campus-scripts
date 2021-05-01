@@ -130,7 +130,7 @@ def kebab(cwd):
                 handle_exceptions(filepath, new_filepath)
 
 
-parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter)
+parser = argparse.ArgumentParser(allow_abbrev=False, formatter_class=argparse.RawTextHelpFormatter)
 parser.add_argument("--kebab",
                     help="The action will be taken on all the child folders and the files of the current directory.\n" +
                     "Rename all the folders and sub-folders, pdf files, text files, excel files, document files, media files as following:\n" +
