@@ -34,6 +34,10 @@ import sys
 
 cwd = os.getcwd()  # current working directory
 
+# File extension is checked to prevent messing with the system. If we change the filename of system files that may cause errors.
+extensions = (".pdf", ".doc", ".docx", ".xls", ".xlsx",
+              ".png", ".jpg", ".txt", ".mp4", ".mp3")
+
 
 def make_upper_camel_kebab(x):
     # convert test folder to Test-Folder
@@ -77,9 +81,6 @@ def upper_camel_kebab(cwd):
         handle_exceptions(dirpath, new_dirpath)
 
     # Rename files
-    # File extension is checked to prevent messing with the system. If we change the filename of system files that may cause errors.
-    extensions = (".pdf", ".doc", ".docx", ".xls", ".xlsx",
-                  ".png", ".jpg", ".txt", ".mp4", ".mp3")
     for dirpath, _, filenames in os.walk(cwd):
         for f in filenames:
             # check the file extension
@@ -116,9 +117,6 @@ def kebab(cwd):
         handle_exceptions(dirpath, new_dirpath)
 
     # Rename files
-    # File extension is checked to prevent messing with the system. If we change the filename of system files that may cause errors.
-    extensions = (".pdf", ".doc", ".docx", ".xls", ".xlsx",
-                  ".png", ".jpg", ".txt", ".mp4", ".mp3")
     for dirpath, _, filenames in os.walk(cwd):
         for f in filenames:
             # check the file extension
@@ -130,7 +128,8 @@ def kebab(cwd):
                 handle_exceptions(filepath, new_filepath)
 
 
-parser = argparse.ArgumentParser(allow_abbrev=False, formatter_class=argparse.RawTextHelpFormatter)
+parser = argparse.ArgumentParser(
+    allow_abbrev=False, formatter_class=argparse.RawTextHelpFormatter)
 parser.add_argument("--kebab",
                     help="The action will be taken on all the child folders and the files of the current directory.\n" +
                     "Rename all the folders and sub-folders, pdf files, text files, excel files, document files, media files as following:\n" +
