@@ -52,7 +52,7 @@ def handle_exceptions(old_name, new_name):
         print(f"Can't rename {old_name} to {new_name}.")
         print(f"{new_name} already exists.\n")
         return
-        
+
     try:
         os.rename(old_name, new_name)
     except PermissionError:
@@ -112,9 +112,20 @@ def upper_camel_kebab(cwd):
 
 def kebab(cwd):
     # Rename folders
-    for dirpath, _, filenames in os.walk(cwd):
+    dirpaths = [x[0] for x in os.walk(cwd)]
+
+    for dirpath in dirpaths:
+        # prevent renaming the parent directory
+        child = dirpath.replace(cwd, "")
+
+        if not os.path.exists(dirpath):
+            last_index = child.rfind("\\")  # index of the last backslash
+            part1 = child[:last_index]
+            part2 = child[last_index:]
+            dirpath = cwd + part1.replace(" ", "-") + part2
+
         # replace the dir path blank spaces with hyphen
-        new_dirpath = dirpath.replace(" ", "-")
+        new_dirpath = cwd + child.replace(" ", "-")
 
         # for renaming and exception handling
         handle_exceptions(dirpath, new_dirpath)
@@ -124,10 +135,24 @@ def kebab(cwd):
         for f in filenames:
             # check the file extension
             if f.endswith(extensions):
-                filepath = os.path.abspath(os.path.join(dirpath, f))
-                new_filepath = filepath.replace(" ", "-")
+                filepath = os.path.join(dirpath, f)
 
-                # for renaming and handling exceptions
+                # prevent renaming the parent directory
+                child = filepath.replace(cwd, "")
+
+                if not os.path.exists(filepath):
+                    # index of the last backslash
+                    last_index = child.rfind("\\")
+                    part1 = child[:last_index]
+                    part2 = child[last_index:]
+                    filepath = cwd + part1.replace(" ", "-") + part2
+
+                # replace the dir path blank spaces with hyphen
+                new_filepath = cwd + child.replace(" ", "-")
+
+                new_filepath.replace("\\", "/")
+
+                # for renaming and exception handling
                 handle_exceptions(filepath, new_filepath)
 
 
