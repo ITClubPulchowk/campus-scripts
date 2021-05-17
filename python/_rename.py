@@ -64,21 +64,20 @@ def try_rename(old_name, new_name):
 
 def upper_camel_kebab(cwd):
     # Rename folders
-    for dirpath, _, filenames in os.walk(cwd):
-        # split the dirpath in "\"
-        dir_in_list = dirpath.split("\\")
+    dirpaths = [x[0] for x in os.walk(cwd)]
 
-        # capitalize the first letter after each space
-        # replace blank space with hyphen
-        dir_in_list2 = []
-        for s in dir_in_list:
-            if " " in s:
-                dir_in_list2.append(make_upper_camel_kebab(s))
-            else:
-                dir_in_list2.append(s)
+    for dirpath in dirpaths:
+        # prevent renaming the parent directory
+        child = dirpath.replace(cwd, "")
 
-        # join the list with "\" to get new dir name
-        new_dirpath = "\\".join(dir_in_list2)
+        if not os.path.exists(dirpath):
+            last_index = child.rfind("\\")  # index of the last backslash
+            part1 = child[:last_index]
+            part2 = child[last_index:]
+            dirpath = cwd + make_upper_camel_kebab(part1) + part2
+
+        # replace the dir path blank spaces with hyphen
+        new_dirpath = cwd + make_upper_camel_kebab(child)
 
         # for renaming and exception handling
         try_rename(dirpath, new_dirpath)
@@ -88,25 +87,24 @@ def upper_camel_kebab(cwd):
         for f in filenames:
             # check the file extension
             if f.endswith(extensions):
-                # full path of file
-                filepath = os.path.abspath(os.path.join(dirpath, f))
+                filepath = os.path.join(dirpath, f)
 
-                # split the filepath in "\"
-                filepath_in_list = filepath.split("\\")
+                # prevent renaming the parent directory
+                child = filepath.replace(cwd, "")
 
-                # capitalize the first letter after each space
-                # replace blank space with hyphen
-                filepath_in_list2 = []
-                for s in filepath_in_list:
-                    if " " in s:
-                        filepath_in_list2.append(make_upper_camel_kebab(s))
-                    else:
-                        filepath_in_list2.append(s)
+                if not os.path.exists(filepath):
+                    # index of the last backslash
+                    last_index = child.rfind("\\")
+                    part1 = child[:last_index]
+                    part2 = child[last_index:]
+                    filepath = cwd + make_upper_camel_kebab(part1) + part2
 
-                # join the list with "\" to get new dir name
-                new_filepath = "\\".join(filepath_in_list2)
+                # replace the dir path blank spaces with hyphen
+                new_filepath = cwd + make_upper_camel_kebab(child)
 
-                # for renaming and handling exceptions
+                new_filepath.replace("\\", "/")
+
+                # for renaming and exception handling
                 try_rename(filepath, new_filepath)
 
 
