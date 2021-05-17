@@ -46,7 +46,7 @@ def make_upper_camel_kebab(x):
     return "-".join(title_words)
 
 
-def handle_exceptions(old_name, new_name):
+def try_rename(old_name, new_name):
     # handle FileExistsError
     if os.path.exists(new_name) and old_name != new_name:
         print(f"Can't rename {old_name} to {new_name}.")
@@ -81,7 +81,7 @@ def upper_camel_kebab(cwd):
         new_dirpath = "\\".join(dir_in_list2)
 
         # for renaming and exception handling
-        handle_exceptions(dirpath, new_dirpath)
+        try_rename(dirpath, new_dirpath)
 
     # Rename files
     for dirpath, _, filenames in os.walk(cwd):
@@ -107,7 +107,7 @@ def upper_camel_kebab(cwd):
                 new_filepath = "\\".join(filepath_in_list2)
 
                 # for renaming and handling exceptions
-                handle_exceptions(filepath, new_filepath)
+                try_rename(filepath, new_filepath)
 
 
 def kebab(cwd):
@@ -128,7 +128,7 @@ def kebab(cwd):
         new_dirpath = cwd + child.replace(" ", "-")
 
         # for renaming and exception handling
-        handle_exceptions(dirpath, new_dirpath)
+        try_rename(dirpath, new_dirpath)
 
     # Rename files
     for dirpath, _, filenames in os.walk(cwd):
@@ -153,7 +153,7 @@ def kebab(cwd):
                 new_filepath.replace("\\", "/")
 
                 # for renaming and exception handling
-                handle_exceptions(filepath, new_filepath)
+                try_rename(filepath, new_filepath)
 
 
 parser = argparse.ArgumentParser(
