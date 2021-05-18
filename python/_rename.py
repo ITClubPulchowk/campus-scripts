@@ -13,7 +13,7 @@
     Place this script in the directory whose sub-folders, files and sub-files you want to rename.
     Change the working directory in command line to this directory and run the python command;
 
-    Some examples, 
+    Some examples,
 
     Command: python _rename.py --kebab
     Renames the files and the folders:
@@ -40,10 +40,21 @@ extensions = (".pdf", ".doc", ".docx", ".xls", ".xlsx",
 
 
 def make_upper_camel_kebab(x):
-    # convert test folder to Test-Folder
-    strings = x.split()
-    title_words = [a[0].upper() + a[1:] for a in strings]
-    return "-".join(title_words)
+    # convert
+    # \\python programming\\hello world\\hello world.txt to
+    # \\Python-Programming\\Hello-World\\Hello-World.txt
+    dir_in_list = x.split("\\")
+    titled_path = ""
+    for s in dir_in_list:
+        if " " in s:
+            strings = s.split()
+            titled_words = [a.capitalize() for a in strings]
+            titled_path += "\\" + "-".join(titled_words)
+        else:
+            titled_path += "\\" + s
+
+    # rstrip is for handling error renaming the working directory
+    return titled_path.rstrip("\\")
 
 
 def try_rename(old_name, new_name):
@@ -74,10 +85,9 @@ def upper_camel_kebab(cwd):
             last_index = child.rfind("\\")  # index of the last backslash
             part1 = child[:last_index]
             part2 = child[last_index:]
-            dirpath = cwd + make_upper_camel_kebab(part1) + part2
+            dirpath = cwd + make_upper_camel_kebab(part1[1:]) + part2
 
-        # replace the dir path blank spaces with hyphen
-        new_dirpath = cwd + make_upper_camel_kebab(child)
+        new_dirpath = cwd + make_upper_camel_kebab(child[1:])
 
         # for renaming and exception handling
         try_rename(dirpath, new_dirpath)
@@ -97,11 +107,11 @@ def upper_camel_kebab(cwd):
                     last_index = child.rfind("\\")
                     part1 = child[:last_index]
                     part2 = child[last_index:]
-                    filepath = cwd + make_upper_camel_kebab(part1) + part2
+                    filepath = cwd + make_upper_camel_kebab(part1[1:]) + part2
 
-                # replace the dir path blank spaces with hyphen
-                new_filepath = cwd + make_upper_camel_kebab(child)
+                new_filepath = cwd + make_upper_camel_kebab(child[1:])
 
+                # for handling escape character in path
                 new_filepath.replace("\\", "/")
 
                 # for renaming and exception handling
@@ -122,7 +132,6 @@ def kebab(cwd):
             part2 = child[last_index:]
             dirpath = cwd + part1.replace(" ", "-") + part2
 
-        # replace the dir path blank spaces with hyphen
         new_dirpath = cwd + child.replace(" ", "-")
 
         # for renaming and exception handling
@@ -145,9 +154,9 @@ def kebab(cwd):
                     part2 = child[last_index:]
                     filepath = cwd + part1.replace(" ", "-") + part2
 
-                # replace the dir path blank spaces with hyphen
                 new_filepath = cwd + child.replace(" ", "-")
 
+                # for handling escape character in path
                 new_filepath.replace("\\", "/")
 
                 # for renaming and exception handling
