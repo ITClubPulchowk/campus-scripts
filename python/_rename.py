@@ -16,16 +16,25 @@
     Some examples,
 
     Command: python _rename.py --kebab
-    Renames the files and the folders:
+    Renames only the folders and files of the current directory:
         python programs → python-programs
         Summer of '69.mp3 → Summer-of-'69.mp3
         OS module.txt → OS-module.txt
 
     Command: python _rename.py --uppercamelkebab
-    Renames the files and the folders:
+    Renames only the folders and files of the current directory:
         python programs → Python-Programs
         Summer of '69.mp3 → Summer-Of-'69.mp3
         OS module.txt → OS-Module.txt
+
+    Flags:
+    Use --recurse flag for depth renaming
+    Example: 
+    python _rename.py --kebab --recurse
+    kebab renaming for all the child directories and files of the current directory.
+    
+    python _rename.py --uppercamelkebab --recurse
+    Upper-Camel-Kebab renaming for all the child directories and files of the current directory.
 """
 
 import os
@@ -73,7 +82,25 @@ def try_rename(old_name, new_name):
         print(f"{old_name} not found")
 
 
-def upper_camel_kebab(cwd):
+def rename(cwd):
+    # rename only directories and files of the current directory
+    if not args.recurse:
+        # only the dirs and files of the current directory
+        dirs_files = os.listdir(cwd)
+        dirnames = [item for item in dirs_files if os.path.isdir(item)]
+        filenames = [item for item in dirs_files if os.path.isfile(item)]
+
+        for dirname in dirnames:
+            new_dirname = dirname.replace(" ", "-")
+            try_rename(dirname, new_dirname)
+
+        for filename in filenames:
+            if filename.endswith(extensions):
+                new_filename = filename.replace(" ", "-")
+                try_rename(filename, new_filename)
+        return
+
+    # Depth renaming
     # Rename folders
     dirpaths = [x[0] for x in os.walk(cwd)]
 
@@ -85,9 +112,15 @@ def upper_camel_kebab(cwd):
             last_index = child.rfind("\\")  # index of the last backslash
             part1 = child[:last_index]
             part2 = child[last_index:]
-            dirpath = cwd + make_upper_camel_kebab(part1[1:]) + part2
+            if args.kebab:
+                dirpath = cwd + part1.replace(" ", "-") + part2
+            elif args.uppercamelkebab:
+                dirpath = cwd + make_upper_camel_kebab(part1[1:]) + part2
 
-        new_dirpath = cwd + make_upper_camel_kebab(child[1:])
+        if args.kebab:
+            new_dirpath = cwd + child.replace(" ", "-")
+        elif args.uppercamelkebab:
+            new_dirpath = cwd + make_upper_camel_kebab(child[1:])
 
         # for renaming and exception handling
         try_rename(dirpath, new_dirpath)
@@ -107,54 +140,16 @@ def upper_camel_kebab(cwd):
                     last_index = child.rfind("\\")
                     part1 = child[:last_index]
                     part2 = child[last_index:]
-                    filepath = cwd + make_upper_camel_kebab(part1[1:]) + part2
+                    if args.kebab:
+                        filepath = cwd + part1.replace(" ", "-") + part2
+                    elif args.uppercamelkebab:
+                        filepath = cwd + \
+                            make_upper_camel_kebab(part1[1:]) + part2
 
-                new_filepath = cwd + make_upper_camel_kebab(child[1:])
-
-                # for handling escape character in path
-                new_filepath.replace("\\", "/")
-
-                # for renaming and exception handling
-                try_rename(filepath, new_filepath)
-
-
-def kebab(cwd):
-    # Rename folders
-    dirpaths = [x[0] for x in os.walk(cwd)]
-
-    for dirpath in dirpaths:
-        # prevent renaming the parent directory
-        child = dirpath.replace(cwd, "")
-
-        if not os.path.exists(dirpath):
-            last_index = child.rfind("\\")  # index of the last backslash
-            part1 = child[:last_index]
-            part2 = child[last_index:]
-            dirpath = cwd + part1.replace(" ", "-") + part2
-
-        new_dirpath = cwd + child.replace(" ", "-")
-
-        # for renaming and exception handling
-        try_rename(dirpath, new_dirpath)
-
-    # Rename files
-    for dirpath, _, filenames in os.walk(cwd):
-        for f in filenames:
-            # check the file extension
-            if f.endswith(extensions):
-                filepath = os.path.join(dirpath, f)
-
-                # prevent renaming the parent directory
-                child = filepath.replace(cwd, "")
-
-                if not os.path.exists(filepath):
-                    # index of the last backslash
-                    last_index = child.rfind("\\")
-                    part1 = child[:last_index]
-                    part2 = child[last_index:]
-                    filepath = cwd + part1.replace(" ", "-") + part2
-
-                new_filepath = cwd + child.replace(" ", "-")
+                if args.kebab:
+                    new_filepath = cwd + child.replace(" ", "-")
+                elif args.uppercamelkebab:
+                    new_filepath = cwd + make_upper_camel_kebab(child[1:])
 
                 # for handling escape character in path
                 new_filepath.replace("\\", "/")
@@ -166,8 +161,8 @@ def kebab(cwd):
 parser = argparse.ArgumentParser(
     allow_abbrev=False, formatter_class=argparse.RawTextHelpFormatter)
 parser.add_argument("--kebab",
-                    help="The action will be taken on all the child folders and the files of the current directory.\n" +
-                    "Rename all the folders and sub-folders, pdf files, text files, excel files, document files, media files as following:\n" +
+                    help="The action will be taken on only the folders and the files of the current directory.\n" +
+                    "Rename all the folders, pdf files, text files, excel files, document files, media files as following:\n" +
                     "Summer of '69.mp3 → Summer-of-'69.mp3\n" +
                     "Python programs → Python-programs\n" +
                     "OS module.txt → OS-module.txt\n" +
@@ -175,12 +170,17 @@ parser.add_argument("--kebab",
                     action="store_true")
 
 parser.add_argument("--uppercamelkebab",
-                    help="The action will be taken on all the child folders and the files of the current directory.\n" +
-                    "Rename all the folders and sub-folders, pdf files, text files, excel files, document files, media files as following:\n" +
+                    help="The action will be taken on only the folders and files of the current directory.\n" +
+                    "Rename all the folders, pdf files, text files, excel files, document files, media files as following:\n" +
                     "Summer of '69.mp3 → Summer-Of-'69.mp3\n" +
                     "Python programs → Python-Programs\n" +
                     "OS module.txt → OS-Module.txt\n" +
                     "test teXt filE.txt → Test-TeXt-FilE.txt",
+                    action="store_true")
+
+parser.add_argument("--recurse",
+                    help="Depth renaming\n" +
+                    "Rename all the child folders and files of the current directory.\n",
                     action="store_true")
 
 # For displaying help message even if no argument is passed
@@ -189,7 +189,13 @@ if len(sys.argv) == 1:
     sys.exit(1)
 args = parser.parse_args()
 
-if args.kebab:
-    kebab(cwd)
-elif args.uppercamelkebab:
-    upper_camel_kebab(cwd)
+if args.kebab and args.uppercamelkebab:
+    print("Please add only one rename case flag.")
+    sys.exit(1)
+
+if args.recurse and not (args.kebab or args.uppercamelkebab):
+    print("Please use a rename case flag.")
+    sys.exit(1)
+
+if args.kebab or args.uppercamelkebab:
+    rename(cwd)
