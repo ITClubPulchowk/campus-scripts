@@ -29,7 +29,7 @@ Displays the help text for using the script.
 ```
 python _rename.py --kebab
 ```
-Renames the files and the folders:<br>
+Renames only the files and the folders of the working directory:<br>
 python programs → python-programs<br>
 Summer of '69.mp3 → Summer-of-'69.mp3<br>
 OS module.txt → OS-module.txt<br>
@@ -39,7 +39,23 @@ OS module.txt → OS-module.txt<br>
 ``` 
 python _rename.py --uppercamelkebab
 ```
-Renames the files and the folders:<br>
+Renames only the files and the folders of the working directory:<br>
 python programs → Python-Programs<br>
 Summer of '69.mp3 → Summer-Of-'69.mp3<br>
 OS module.txt → OS-Module.txt<br>
+
+---
+
+### Flags:
+Use --recurse flag for depth renaming
+``` 
+python _rename.py --kebab --recurse
+```
+kebab renaming for all the child folders and directories of the working directory.
+
+---
+
+``` 
+python _rename.py --uppercamelkebab --recurse
+```
+Upper-Camel-Kebab renaming for all the child folders and directories of the working directory.
