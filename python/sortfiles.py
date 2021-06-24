@@ -7,6 +7,9 @@
     - moves .docx files from Downloads to Documents/docs
     - moves .exe and .msi files from Downloads to Downloads/Installers
     - moves .mp4 files from Downloads to Videos 
+
+    How to use:
+    - just run "python sortfiles.py" and it should work (hopefully)
 """
 import os, shutil
 
