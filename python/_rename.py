@@ -39,7 +39,13 @@
 
 import os
 import argparse
+import platform
 import sys
+
+# uppercamelkebab support for Linux
+file_separator = "\\"
+if platform.system() == "Linux":
+    file_separator = "/"
 
 cwd = os.getcwd()  # current working directory
 
@@ -52,18 +58,18 @@ def make_upper_camel_kebab(x):
     # convert
     # \\python programming\\hello world\\hello world.txt to
     # \\Python-Programming\\Hello-World\\Hello-World.txt
-    dir_in_list = x.split("\\")
+    dir_in_list = x.split(file_separator)
     titled_path = ""
     for s in dir_in_list:
         if " " in s:
             strings = s.split()
             titled_words = [a.capitalize() for a in strings]
-            titled_path += "\\" + "-".join(titled_words)
+            titled_path += file_separator + "-".join(titled_words)
         else:
-            titled_path += "\\" + s
+            titled_path += file_separator + s
 
     # rstrip is for handling error renaming the working directory
-    return titled_path.rstrip("\\")
+    return titled_path.rstrip(file_separator)
 
 
 def try_rename(old_name, new_name):
@@ -91,13 +97,28 @@ def rename(cwd):
         filenames = [item for item in dirs_files if os.path.isfile(item)]
 
         for dirname in dirnames:
-            new_dirname = dirname.replace(" ", "-")
-            try_rename(dirname, new_dirname)
+            if args.kebab:
+                new_dirname = dirname.replace(" ", "-")
+                try_rename(dirname, new_dirname)
+
+            elif args.uppercamelkebab:
+                if " " in dirname:
+                    strings = dirname.split()
+                    titled_words = [a.capitalize() for a in strings]
+                    new_dirname = "-".join(titled_words)
+                    try_rename(dirname, new_dirname)
 
         for filename in filenames:
             if filename.endswith(extensions):
-                new_filename = filename.replace(" ", "-")
-                try_rename(filename, new_filename)
+                if args.kebab:
+                    new_filename = filename.replace(" ", "-")
+                    try_rename(filename, new_filename)
+                elif args.uppercamelkebab:
+                    if " " in filename:
+                        strings = filename.split()
+                        titled_words = [a.capitalize() for a in strings]
+                        new_filename = "-".join(titled_words)
+                        try_rename(filename, new_filename)
         return
 
     # Depth renaming
